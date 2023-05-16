@@ -32,19 +32,33 @@ public class Main {
             ResultSet resultSet = metaData.getColumns(null, null, tableName, null);
 
             int totalColumnsInDatabase = 5;
-
+/*            ResultSetMetaData rsmd = resultSet.getMetaData();
+            System.out.println("querying SELECT * FROM XXX");
+            int columnsNumber = rsmd.getColumnCount();
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) System.out.print(",  ");
+                    String columnValue = resultSet.getString(i);
+                    System.out.print(columnValue + " " + rsmd.getColumnName(i));
+                }
+                System.out.println("");
+            }*/
             while (resultSet.next()) {
                 String columnName = resultSet.getString("COLUMN_NAME");
                 if (!columnName.equals("barcode") && !columnName.equals("name") && !columnName.equals("cost") && !columnName.equals("price") && !columnName.equals("current_stock")) {
+                    if (!columnName.equals("id")) {
+                        if (totalColumnsInDatabase > 0) {
+                            insertQuery.append(", ");
+                            valuePlaceholders.append(", ");
+                    }
                     insertQuery.append(", ").append(columnName);
                     valuePlaceholders.append(", ?");
                     defaultValues.add(defaultValue);
                     totalColumnsInDatabase++;
+                    System.out.println(columnName);
                 }
             }
-
             resultSet.close();
-
             insertQuery.append(")");
             valuePlaceholders.append(")");
             insertQuery.append(valuePlaceholders);
@@ -72,9 +86,8 @@ public class Main {
 
                     // Preencha os valores padrão para as colunas NOT NULL adicionais
                     for (int j = 0; j < defaultValues.size(); j++) {
-                        preparedStatement.setString(j + 6, defaultValues.get(j));
+                        preparedStatement.setString(j + 5, defaultValues.get(j));
                     }
-
                     preparedStatement.executeUpdate();
                     preparedStatement.close();
                 } else {
@@ -84,7 +97,7 @@ public class Main {
 
             connection.close();
             System.out.println("Dados inseridos");
-        } catch (Exception e) {
+        } }catch (Exception e) {
             e.printStackTrace();
         }
     }
