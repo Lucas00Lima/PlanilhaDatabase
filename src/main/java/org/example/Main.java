@@ -13,11 +13,11 @@ import java.util.Set;
 
 public class Main {
     public static void main(String[] args) throws IOException, SQLException {
-        String filePath = "C:\\Users\\lukin\\OneDrive\\Área de Trabalho\\Nova pasta\\planilha.xlsx";
+        String filePath = "caminho\\arquivo.xlsx";
         String tableName = "product";
-        String url = "jdbc:mysql://localhost:3306/db000";
+        String url = "jdbc:mysql://localhost:3306/banco";
         String username = "root";
-        String password = "@soma+";
+        String password = "";
         String defaultValue = "";
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
             connection.setAutoCommit(false);
