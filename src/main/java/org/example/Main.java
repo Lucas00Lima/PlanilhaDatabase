@@ -2,7 +2,6 @@ package org.example;
 
 import org.apache.poi.ss.usermodel.*;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class Main {
         String password = "senha";
         String defaultValue = "";
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
-            FileInputStream fileInputStream = new FileInputStream(new File(filePath));
+            FileInputStream fileInputStream = new FileInputStream(filePath);
             Workbook workbook = WorkbookFactory.create(fileInputStream);
             Sheet sheet = workbook.getSheetAt(0);
             DataFormatter dataFormatter = new DataFormatter();
